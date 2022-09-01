@@ -1,0 +1,24 @@
+{
+  "name": "gym-backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon api.js"
+  },
+  "dependencies": {
+    "body-parser": "~1.0.1",
+    "cors": "2.8.1",
+    "dotenv": "^16.0.2",
+    "express": "~4.0.0",
+    "mssql": "^6.2.1",
+    "prometheus-api-metrics": "^3.2.2"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.19"
+  },
+  "keywords": [],
+  "author": "Dhananjay Kumar <debugmode@outlook.com> (https://debugmode.net)",
+  "license": "ISC"
+}
