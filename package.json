@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon api.js"
+    "start": "node api.js"
   },
   "dependencies": {
     "body-parser": "~1.0.1",
@@ -12,6 +12,7 @@
     "dotenv": "^16.0.2",
     "express": "~4.5.0",
     "mssql": "^6.2.1",
+    "node-cache": "^5.1.2",
     "prometheus-api-metrics": "^3.2.2"
   },
   "devDependencies": {

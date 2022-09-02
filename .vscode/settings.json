@@ -1,5 +1,7 @@
 {
     "cSpell.words": [
         "recordsets"
-    ]
+    ],
+    "appService.defaultWebAppToDeploy": "/subscriptions/0b17085f-a7d5-4c61-84bb-5afba89f61e8/microsoft.web/sites/subscriptions/0b17085f-a7d5-4c61-84bb-5afba89f61e8/resourceGroups/Gym/providers/Microsoft.Web/sites/gymApp-backend",
+    "appService.deploySubpath": "."
 }

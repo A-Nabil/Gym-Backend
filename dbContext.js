@@ -1,5 +1,8 @@
+const NodeCache = require( "node-cache" );
 var  config = require('./dbConfig');
 const  sql = require('mssql');
+
+const myCache = new NodeCache({ stdTTL: 60*60*2});
 
 async  function  getOrders() {
     try {
@@ -15,8 +18,15 @@ async  function  getOrders() {
   async function getMuscles()
   {
     try {
+      if(myCache.has( 'muscles' ))
+      {
+        return myCache.get( 'muscles');
+      }
       let  pool = await  sql.connect(config);
       let  muscles = await  pool.request().query("select distinct  muscle  FROM [ExercisesDB].[dbo].[exercises]");
+
+      myCache.set( 'muscles',muscles.recordsets);
+
       return  muscles.recordsets;
     }
     catch (error) {
