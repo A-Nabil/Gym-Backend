@@ -23,7 +23,7 @@ async  function  getOrders() {
         return myCache.get( 'muscles');
       }
       let  pool = await  sql.connect(config);
-      let  muscles = await  pool.request().query("select distinct  muscle  FROM [ExercisesDB].[dbo].[exercises]");
+      let  muscles = await  pool.request().query("SELECT [Id],[Name] ,[name_en] FROM [dbo].[muscles]");
 
       myCache.set( 'muscles',muscles.recordsets);
 
