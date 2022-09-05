@@ -36,6 +36,27 @@ async function getMuscles() {
   }
 }
 
+async function getWorkoutsByMuscleId(MuscleId) {
+  try {
+    if (myCache.has("muscleWorkouts" + MuscleId)) {
+      return myCache.get("muscles");
+    }
+    let pool = await sql.connect(config);
+    let muscleWorkouts = await pool
+      .request()
+      .input("muscleId_parameter", sql.Int, MuscleId)
+      .query(
+        "SELECT * FROM [dbo].[exercises] where muscleId = @muscleId_parameter"
+      );
+
+    myCache.set("muscleWorkouts" + MuscleId, muscleWorkouts.recordsets);
+
+    return muscleWorkouts.recordsets;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 async function getOrder(productId) {
   try {
     let pool = await sql.connect(config);
@@ -53,4 +74,5 @@ module.exports = {
   getOrders: getOrders,
   getOrder: getOrder,
   getMuscles: getMuscles,
+  getWorkoutsByMuscleId: getWorkoutsByMuscleId,
 };
