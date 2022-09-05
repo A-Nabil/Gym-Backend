@@ -30,7 +30,7 @@ router.route("/muscles").get((request, response) => {
   });
 });
 
-router.route("/workouts/:muscleId").get((request, response) => {
+router.route("/muscles/:muscleId/workouts").get((request, response) => {
   Db.getWorkoutsByMuscleId(request.params.muscleId).then((data) => {
     response.json(data[0]);
   });
