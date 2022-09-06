@@ -13,8 +13,17 @@ app.use(cors({ origin: "*" }));
 app.use("/api", router);
 
 const appInsights = require("applicationinsights");
-appInsights.setup(process.env.APPLICATIONINSIGHTS_CONNECTION_STRING);
-appInsights.start();
+appInsights.setup(process.env.APPLICATIONINSIGHTS_CONNECTION_STRING)
+.setAutoDependencyCorrelation(true)
+.setAutoCollectRequests(true)
+.setAutoCollectPerformance(true, true)
+.setAutoCollectExceptions(true)
+.setAutoCollectDependencies(true)
+.setAutoCollectConsole(true)
+.setUseDiskRetryCaching(true)
+.setSendLiveMetrics(false)
+.setDistributedTracingMode(appInsights.DistributedTracingModes.AI)
+.start();
 
 router.use((request, response, next) => {
   console.log("middleware");
