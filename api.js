@@ -12,6 +12,10 @@ app.use(bodyParser.json());
 app.use(cors({ origin: "*" }));
 app.use("/api", router);
 
+const appInsights = require("applicationinsights");
+appInsights.setup(process.env.APPLICATIONINSIGHTS_CONNECTION_STRING);
+appInsights.start();
+
 router.use((request, response, next) => {
   console.log("middleware");
   next();
