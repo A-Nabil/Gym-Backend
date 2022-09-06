@@ -9,7 +9,7 @@ var router = express.Router();
 app.use(apiMetrics());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-app.use(cors());
+app.use(cors({ origin: "*" }));
 app.use("/api", router);
 
 router.use((request, response, next) => {
