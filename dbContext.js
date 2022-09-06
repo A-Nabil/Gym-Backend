@@ -39,7 +39,7 @@ async function getMuscles() {
 async function getWorkoutsByMuscleId(MuscleId) {
   try {
     if (myCache.has("muscleWorkouts" + MuscleId)) {
-      return myCache.get("muscles");
+      return myCache.get("muscleWorkouts");
     }
     let pool = await sql.connect(config);
     let muscleWorkouts = await pool
