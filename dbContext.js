@@ -39,7 +39,7 @@ async function getMuscles() {
 async function getWorkoutsByMuscleId(MuscleId) {
   try {
     if (myCache.has("muscleWorkouts" + MuscleId)) {
-      return myCache.get("muscleWorkouts"+ MuscleId);
+      return myCache.get("muscleWorkouts" + MuscleId);
     }
     let pool = await sql.connect(config);
     let muscleWorkouts = await pool
@@ -57,13 +57,16 @@ async function getWorkoutsByMuscleId(MuscleId) {
   }
 }
 
-async function getOrder(productId) {
+async function updateWorkout(name, isGym) {
   try {
     let pool = await sql.connect(config);
     let product = await pool
       .request()
-      .input("input_parameter", sql.Int, productId)
-      .query("SELECT * from Orders where Id = @input_parameter");
+      .input("workoutName", sql.NVarChar, name)
+      .input("isGymParm", sql.Bit, isGym.toLowerCase() === "true")
+      .query(
+        "update exercises set isGym = @isGymParm where name = @workoutName"
+      );
     return product.recordsets;
   } catch (error) {
     console.log(error);
@@ -72,7 +75,7 @@ async function getOrder(productId) {
 
 module.exports = {
   getOrders: getOrders,
-  getOrder: getOrder,
+  updateWorkout: updateWorkout,
   getMuscles: getMuscles,
   getWorkoutsByMuscleId: getWorkoutsByMuscleId,
 };

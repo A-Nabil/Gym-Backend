@@ -13,17 +13,18 @@ app.use(cors({ origin: "*" }));
 app.use("/api", router);
 
 const appInsights = require("applicationinsights");
-appInsights.setup(process.env.APPLICATIONINSIGHTS_CONNECTION_STRING)
-.setAutoDependencyCorrelation(true)
-.setAutoCollectRequests(true)
-.setAutoCollectPerformance(true, true)
-.setAutoCollectExceptions(true)
-.setAutoCollectDependencies(true)
-.setAutoCollectConsole(true)
-.setUseDiskRetryCaching(true)
-.setSendLiveMetrics(false)
-.setDistributedTracingMode(appInsights.DistributedTracingModes.AI)
-.start();
+appInsights
+  .setup(process.env.APPLICATIONINSIGHTS_CONNECTION_STRING)
+  .setAutoDependencyCorrelation(true)
+  .setAutoCollectRequests(true)
+  .setAutoCollectPerformance(true, true)
+  .setAutoCollectExceptions(true)
+  .setAutoCollectDependencies(true)
+  .setAutoCollectConsole(true)
+  .setUseDiskRetryCaching(true)
+  .setSendLiveMetrics(false)
+  .setDistributedTracingMode(appInsights.DistributedTracingModes.AI)
+  .start();
 
 router.use((request, response, next) => {
   console.log("middleware");
@@ -48,8 +49,16 @@ router.route("/muscles/:muscleId/workouts").get((request, response) => {
     response.json(data[0]);
   });
 });
-router.route("/workouts/:id").get((request, response) => {
-  Db.getOrder(request.params.id).then((data) => {
+
+router.route("/workouts").post((request, response, next) => {
+  if (!request.body.name || !request.body.isGym) {
+    const err = new Error("Required body params missing");
+    err.status = 400;
+    next(err);
+    return;
+  }
+
+  Db.updateWorkout(request.body.name, request.body.isGym).then((data) => {
     response.json(data[0]);
   });
 });
