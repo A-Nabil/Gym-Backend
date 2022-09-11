@@ -44,10 +44,18 @@ router.route("/muscles").get((request, response) => {
   });
 });
 
-router.route("/muscles/:muscleId/workouts").get((request, response) => {
-  Db.getWorkoutsByMuscleId(request.params.muscleId).then((data) => {
-    response.json(data[0]);
-  });
+router.route("/workouts").get((request, response, next) => {
+  if (!request.body.muscleId || !request.body.isGym) {
+    const err = new Error("Required body params missing");
+    err.status = 400;
+    next(err);
+    return;
+  }
+  Db.getWorkoutsByMuscleId(request.body.muscleId, request.body.isGym).then(
+    (data) => {
+      response.json(data[0]);
+    }
+  );
 });
 
 router.route("/workouts").post((request, response, next) => {

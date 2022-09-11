@@ -36,7 +36,7 @@ async function getMuscles() {
   }
 }
 
-async function getWorkoutsByMuscleId(MuscleId) {
+async function getWorkoutsByMuscleId(MuscleId, isGym) {
   try {
     if (myCache.has("muscleWorkouts" + MuscleId)) {
       return myCache.get("muscleWorkouts" + MuscleId);
@@ -45,8 +45,9 @@ async function getWorkoutsByMuscleId(MuscleId) {
     let muscleWorkouts = await pool
       .request()
       .input("muscleId_parameter", sql.Int, MuscleId)
+      .input("isGym_parameter", sql.Bit, isGym.toLowerCase() === "true")
       .query(
-        "SELECT * FROM [dbo].[exercises] where muscleId = @muscleId_parameter"
+        "SELECT * FROM [dbo].[exercises] where muscleId = @muscleId_parameter and isGym = @isGym_parameter"
       );
 
     myCache.set("muscleWorkouts" + MuscleId, muscleWorkouts.recordsets);
