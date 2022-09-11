@@ -38,8 +38,8 @@ async function getMuscles() {
 
 async function getWorkoutsByMuscleId(MuscleId, isGym) {
   try {
-    if (myCache.has("muscleWorkouts" + MuscleId)) {
-      return myCache.get("muscleWorkouts" + MuscleId);
+    if (myCache.has("muscleWorkouts" + MuscleId + isGym)) {
+      return myCache.get("muscleWorkouts" + MuscleId + isGym);
     }
     let pool = await sql.connect(config);
     let muscleWorkouts = await pool
@@ -50,7 +50,7 @@ async function getWorkoutsByMuscleId(MuscleId, isGym) {
         "SELECT * FROM [dbo].[exercises] where muscleId = @muscleId_parameter and isGym = @isGym_parameter"
       );
 
-    myCache.set("muscleWorkouts" + MuscleId, muscleWorkouts.recordsets);
+    myCache.set("muscleWorkouts" + MuscleId + isGym, muscleWorkouts.recordsets);
 
     return muscleWorkouts.recordsets;
   } catch (error) {
