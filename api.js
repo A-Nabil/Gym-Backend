@@ -50,7 +50,7 @@ router.route("/workouts").get((request, response, next) => {
       "Required body params missing" +
         request.body.muscleId +
         " muscleId: " +
-        " isgym: " +
+        " isGym: " +
         request.body.isGym
     );
     err.status = 400;
