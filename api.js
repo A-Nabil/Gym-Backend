@@ -45,19 +45,19 @@ router.route("/muscles").get((request, response) => {
 });
 
 router.route("/workouts").get((request, response, next) => {
-  if (!request.body.muscleId || !request.body.isGym) {
+  if (!request.query.muscleId || !request.query.isGym) {
     const err = new Error(
-      "Required body params missing" +
-        request.body.muscleId +
+      "Required params are missing" +
+        request.query.muscleId +
         " muscleId: " +
         " isGym: " +
-        request.body.isGym
+        request.query.isGym
     );
     err.status = 400;
     next(err);
     return;
   }
-  Db.getWorkoutsByMuscleId(request.body.muscleId, request.body.isGym).then(
+  Db.getWorkoutsByMuscleId(request.query.muscleId, request.query.isGym).then(
     (data) => {
       response.json(data[0]);
     }
