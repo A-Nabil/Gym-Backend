@@ -46,7 +46,13 @@ router.route("/muscles").get((request, response) => {
 
 router.route("/workouts").get((request, response, next) => {
   if (!request.body.muscleId || !request.body.isGym) {
-    const err = new Error("Required body params missing");
+    const err = new Error(
+      "Required body params missing" +
+        request.body.muscleId +
+        " muscleId: " +
+        " isgym: " +
+        request.body.isGym
+    );
     err.status = 400;
     next(err);
     return;
