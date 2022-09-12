@@ -50,7 +50,7 @@ async function getWorkoutsByMuscleId(MuscleId, isGym) {
         "SELECT * FROM [dbo].[exercises] where muscleId = @muscleId_parameter and isGym = @isGym_parameter and primaryMuscle is null"
       );
 
-    myCache.set("muscleWorkouts" + MuscleId + isGym, muscleWorkouts.recordsets);
+    // myCache.set("muscleWorkouts" + MuscleId + isGym, muscleWorkouts.recordsets);
 
     return muscleWorkouts.recordsets;
   } catch (error) {
