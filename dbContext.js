@@ -58,15 +58,15 @@ async function getWorkoutsByMuscleId(MuscleId, isGym) {
   }
 }
 
-async function updateWorkout(name, isGym) {
+async function updateWorkout(name, primaryMuscle) {
   try {
     let pool = await sql.connect(config);
     let product = await pool
       .request()
       .input("workoutName", sql.NVarChar, name)
-      .input("isGymParm", sql.Bit, isGym.toLowerCase() === "true")
+      .input("isGymParm", sql.NVarChar, primaryMuscle)
       .query(
-        "update exercises set isGym = @isGymParm where name = @workoutName"
+        "update exercises set primaryMuscle = @isGymParm where name = @workoutName"
       );
     return product.recordsets;
   } catch (error) {

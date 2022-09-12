@@ -65,16 +65,18 @@ router.route("/workouts").get((request, response, next) => {
 });
 
 router.route("/workouts").post((request, response, next) => {
-  if (!request.body.name || !request.body.isGym) {
+  if (!request.query.name || !request.query.primaryMuscle) {
     const err = new Error("Required body params missing");
     err.status = 400;
     next(err);
     return;
   }
 
-  Db.updateWorkout(request.body.name, request.body.isGym).then((data) => {
-    response.json(data[0]);
-  });
+  Db.updateWorkout(request.query.name, request.query.primaryMuscle).then(
+    (data) => {
+      response.json(data[0]);
+    }
+  );
 });
 
 var port = process.env.PORT || 8090;
