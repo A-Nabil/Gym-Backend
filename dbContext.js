@@ -47,7 +47,7 @@ async function getWorkoutsByMuscleId(MuscleId, isGym) {
       .input("muscleId_parameter", sql.Int, MuscleId)
       .input("isGym_parameter", sql.Bit, isGym.toLowerCase() === "true")
       .query(
-        "SELECT * FROM [dbo].[exercises] where muscleId = @muscleId_parameter and isGym = @isGym_parameter"
+        "SELECT * FROM [dbo].[exercises] where muscleId = @muscleId_parameter and isGym = @isGym_parameter and primaryMuscle is null"
       );
 
     myCache.set("muscleWorkouts" + MuscleId + isGym, muscleWorkouts.recordsets);
